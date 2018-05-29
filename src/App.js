@@ -1,13 +1,16 @@
-import React, { Component } from 'react'
-import 'antd/dist/antd.css'
-import { Layout, Menu, Icon } from 'antd'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
-import ExploreScene from './scenes/Explore'
-import AboutScene from './scenes/About'
+import React, { Component } from "react"
+import "antd/dist/antd.css"
+import { Layout, Menu, Icon } from "antd"
+import { BrowserRouter, Route, Link } from "react-router-dom"
+import ExploreScene from "./scenes/Explore"
+import AboutScene from "./scenes/About"
 const { Header, Content } = Layout
 
-const SideMenu = () => (
-	<Menu mode="horizontal" style={{ lineHeight: '64px' }}>
+const MainMenu = () => (
+	<Menu
+		mode="horizontal"
+		style={{ lineHeight: "64px" }}
+		defaultSelectedKeys={["1"]}>
 		<Menu.Item key="1">
 			<Link to="/">
 				<Icon type="github" />
@@ -41,7 +44,7 @@ class App extends Component {
 							<div style={styles.logo}>
 								<h2>Github Explorer</h2>
 							</div>
-							<SideMenu />
+							<MainMenu />
 						</Header>
 						<Layout>
 							<Content style={styles.content}>
@@ -57,14 +60,15 @@ class App extends Component {
 
 const styles = {
 	header: {
-		background: '#fff',
+		background: "#fff",
 	},
 	logo: {
-		float: 'left',
+		float: "left",
 		marginRight: 25,
 	},
 	content: {
-		background: '#fff',
+		background: "#fff",
+		padding: 50,
 	},
 }
 
