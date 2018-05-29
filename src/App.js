@@ -4,7 +4,7 @@ import { Layout, Menu, Icon } from 'antd'
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 import ExploreScene from './scenes/Explore'
 import AboutScene from './scenes/About'
-const { Header, Footer, Sider, Content } = Layout
+const { Header, Content } = Layout
 
 const SideMenu = () => (
 	<Menu mode="horizontal" style={{ lineHeight: '64px' }}>
