@@ -1,5 +1,6 @@
 import React, { Component } from "react"
-import { Input, Card, Row, Col, Icon } from "antd"
+import { Input, Card, Row, Col, Icon, Pagination } from "antd"
+import RepoCard from "./components/RepoCard"
 import axios from "axios"
 const { Search } = Input
 const { Meta } = Card
@@ -10,6 +11,8 @@ export default class Explore extends Component {
 		this.state = {
 			loading: false,
 			items: [],
+			currentPage: 1,
+			itemPerPage: 12,
 		}
 	}
 
@@ -21,6 +24,7 @@ export default class Explore extends Component {
 				this.setState({
 					loading: false,
 					items: response.data.items,
+					currentPage: 1,
 				})
 			})
 			.catch(err => {
@@ -29,8 +33,30 @@ export default class Explore extends Component {
 			})
 	}
 
+	renderResult() {
+		if (this.state.loading) {
+			return <Icon type="loading" style={styles.loading} />
+		} else if (this.state.items.length === 0) {
+			return <h1>Data Kosong</h1>
+		} else {
+			const { currentPage, itemPerPage, items } = this.state
+			const offset = (currentPage - 1) * itemPerPage
+			const filteredItem = items.slice(offset, offset + itemPerPage)
+			return filteredItem.map((item, index) => (
+				<Col span={4} key={index}>
+					<RepoCard item={item} />
+				</Col>
+			))
+		}
+	}
+
+	changePage(page) {
+		this.setState({ currentPage: page })
+		this.renderResult()
+	}
+
 	render() {
-		console.log(this.state.items)
+		console.log("state", this.state)
 		return (
 			<div>
 				<Search
@@ -41,25 +67,16 @@ export default class Explore extends Component {
 					style={styles.search}
 				/>
 
-				<Row gutter={15}>
-					{this.state.loading ? (
-						<Icon type="loading" style={styles.loading} />
-					) : (
-						this.state.items.map(item => (
-							<Col span={4}>
-								<a href={item.html_url}>
-									<Card
-										hoverable
-										cover={
-											<img src={item.owner.avatar_url} style={styles.card} />
-										}>
-										<Meta title={item.name} description={item.owner.login} />
-									</Card>
-								</a>
-							</Col>
-						))
-					)}
-				</Row>
+				<Row gutter={15}>{this.renderResult()}</Row>
+
+				<Pagination
+					style={styles.pagination}
+					current={this.state.currentPage}
+					total={this.state.items.length}
+					pageSize={this.state.itemPerPage}
+					onChange={page => this.changePage(page)}
+					hideOnSinglePage={true}
+				/>
 			</div>
 		)
 	}
@@ -71,5 +88,8 @@ const styles = {
 	},
 	loading: {
 		fontSize: 30,
+	},
+	pagination: {
+		marginTop: 20,
 	},
 }
