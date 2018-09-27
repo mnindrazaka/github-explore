@@ -1,75 +1,44 @@
-import React, { Component } from "react"
-import "antd/dist/antd.css"
-import { Layout, Menu, Icon } from "antd"
-import { BrowserRouter, Route, Link } from "react-router-dom"
-import ExploreScene from "./scenes/Explore"
-import AboutScene from "./scenes/About"
+import React, { Component } from 'react'
+import 'antd/dist/antd.css'
+import { Layout } from 'antd'
+import { BrowserRouter } from 'react-router-dom'
+import Navigation from './components/Navigation'
+import Scenes from './scenes'
+
 const { Header, Content } = Layout
 
-const MainMenu = () => (
-	<Menu
-		mode="horizontal"
-		style={{ lineHeight: "64px" }}
-		defaultSelectedKeys={["1"]}>
-		<Menu.Item key="1">
-			<Link to="/">
-				<Icon type="github" />
-				Explore
-			</Link>
-		</Menu.Item>
-
-		<Menu.Item key="2">
-			<Link to="/about">
-				<Icon type="info-circle-o" />
-				About
-			</Link>
-		</Menu.Item>
-	</Menu>
-)
-
-const Router = () => (
-	<div>
-		<Route exact path="/" component={ExploreScene} />
-		<Route path="/about" component={AboutScene} />
-	</div>
-)
-
 class App extends Component {
-	render() {
-		return (
-			<BrowserRouter>
-				<div>
-					<Layout>
-						<Header style={styles.header}>
-							<div style={styles.logo}>
-								<h2>Github Explorer</h2>
-							</div>
-							<MainMenu />
-						</Header>
-						<Layout>
-							<Content style={styles.content}>
-								<Router />
-							</Content>
-						</Layout>
-					</Layout>
-				</div>
-			</BrowserRouter>
-		)
-	}
+  render() {
+    return (
+      <BrowserRouter>
+        <Layout>
+          <Header style={styles.header}>
+            <h2 style={styles.logo}>Github Explorer</h2>
+            <Navigation />
+          </Header>
+          <Layout>
+            <Content style={styles.content}>
+              <Scenes />
+            </Content>
+          </Layout>
+        </Layout>
+      </BrowserRouter>
+    )
+  }
 }
 
 const styles = {
-	header: {
-		background: "#fff",
-	},
-	logo: {
-		float: "left",
-		marginRight: 25,
-	},
-	content: {
-		background: "#fff",
-		padding: 50,
-	},
+  header: {
+    background: '#fff'
+  },
+  logo: {
+    float: 'left',
+    marginRight: 25
+  },
+  content: {
+    background: '#fff',
+    padding: 50
+  }
 }
 
 export default App
