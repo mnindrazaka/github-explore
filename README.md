@@ -1,4 +1,15 @@
 # Github Explore
 
-Search for user and repo using react js
-This project is my research about frontend development using react
+Search github user and repository using github API - created using react
+
+## Features
+
+- [x] Search user by username
+- [x] Search repository by repository name
+
+## Development
+
+```bash
+$ yarn
+$ yarn start
+```
